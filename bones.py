@@ -87,8 +87,7 @@ class Net(nn.Module):
                 output = self.drops[i](output)
 
         return output
-    
-    
+
     
 class Model:
     def __init__(self, *args, **kwargs):
@@ -130,7 +129,7 @@ class Model:
         self.lr_decay = kwargs.get('lr_decay', 1)
         self.lr_min = kwargs.get('lr_min', 1e-10)
         self.optimizer = optimizer(self.model.parameters(), lr = self.lr)
-        self.max_epochs = kwargs.get('max_epochs', 100)
+        self.max_epochs = kwargs.get('max_epochs', 10)
             
         self.trainerr, self.testerr, self.err, self.epoch, self.loc, self.save_file = [], [], 0, 0, 0, None #just inits
         
@@ -302,9 +301,6 @@ class Model:
         ax[1].hist2d(xt, yt, bins = 30)
         ax[1].set_xlabel('train truth')
         ax[1].set_ylabel('train predication') 
-
-
-
         plt.show()
     
     def data_prep(self):
@@ -314,7 +310,6 @@ class Model:
             data = torch.unsqueeze(data, 0)
         if len(data.shape) >= 2:
             data = torch.unsqueeze(data, 1)
-
 
         split = int(self.train_fac * self.truth.shape[0])
         train, traintruth = data[:split], self.truth[:split]
